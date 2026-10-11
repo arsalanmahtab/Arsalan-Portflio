@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { ModeSwitchLink } from "@/components/layout/ModeSwitchLink";
 import { Contact } from "@/components/sections/shared/Contact";
 import { SectionStub } from "@/components/sections/shared/SectionStub";
+import { SplitText } from "@/components/ui/SplitText";
 
 export const metadata: Metadata = {
   title: { absolute: "Arslan Mahtab, full stack software engineer" },
@@ -19,9 +20,12 @@ export default function SoftwareHome() {
     <>
       <section className="wrap flex min-h-svh flex-col justify-center pt-28 pb-20">
         <p className="mb-5 font-semibold text-fg-2">Arslan Mahtab, full stack software engineer</p>
-        <h1 className="mb-8 max-w-[10em] text-[clamp(2.8rem,7vw,6.2rem)] leading-[0.92] font-extrabold tracking-tighter">
-          Full stack &amp; AI apps for <span className="serif-accent text-violet">SaaS products.</span>
-        </h1>
+        <SplitText
+          as="h1"
+          lines={["Full stack", "& AI apps for", { accent: "SaaS products." }]}
+          lineClassNames={[undefined, undefined, "text-violet"]}
+          className="mb-8 text-[clamp(2.8rem,7vw,6.2rem)] leading-[0.92] font-extrabold tracking-tighter"
+        />
         <p className="max-w-[30em] text-xl text-fg-2">
           I build SaaS products, web apps and AI-powered tools end to end, from the database and
           APIs to a fast, polished front end.

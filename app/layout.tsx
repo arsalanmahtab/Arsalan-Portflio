@@ -13,6 +13,7 @@ import { Providers } from "@/components/providers/Providers";
 import { site } from "@/config/site";
 import { contactLabels } from "@/data/contact";
 
+/* globals.css adds weight-specific faces to the "… Fallback" families these generate. */
 const syne = Syne({
   subsets: ["latin"],
   weight: ["600", "700", "800"],

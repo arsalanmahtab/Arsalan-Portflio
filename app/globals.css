@@ -38,6 +38,77 @@
   --serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
 }
 
+/*
+ * Fallback faces shown until the web fonts arrive (display: swap). next/font
+ * generates one "… Fallback" face per font, sized for its regular weight; these
+ * add faces to the same families for the weights this site actually uses, which
+ * the browser picks instead. Syne in particular gets much wider as it gets
+ * bolder: its 800 is 1.78× the width of Arial, so the generic fallback made
+ * every heading re-wrap (a large layout shift) when Syne arrived.
+ * size-adjust = web font width ÷ local font width, measured in Chrome over the
+ * site's own headings and labels at each weight. The ascent and descent
+ * overrides keep baselines in place (web font metric ÷ size-adjust).
+ */
+@font-face {
+  font-family: "Syne Fallback";
+  src: local("Arial Black"), local("Arial-Black");
+  font-weight: 751 1000;
+  size-adjust: 143.72%;
+  ascent-override: 64.36%;
+  descent-override: 19.13%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Syne Fallback";
+  src: local("Arial Black"), local("Arial-Black");
+  font-weight: 1 750;
+  size-adjust: 99.45%;
+  ascent-override: 93.01%;
+  descent-override: 27.65%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Manrope Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 651 1000;
+  size-adjust: 100.53%;
+  ascent-override: 106.04%;
+  descent-override: 29.84%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Manrope Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 550 650;
+  size-adjust: 98.67%;
+  ascent-override: 108.04%;
+  descent-override: 30.4%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Manrope Fallback";
+  src: local("Arial"), local("ArialMT");
+  font-weight: 1 549;
+  size-adjust: 102.31%;
+  ascent-override: 104.2%;
+  descent-override: 29.32%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Instrument Serif Fallback";
+  src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT");
+  font-style: italic;
+  size-adjust: 89.41%;
+  ascent-override: 110.73%;
+  descent-override: 34.67%;
+  line-gap-override: 0%;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color-scheme: light;
@@ -148,6 +219,37 @@
   ::selection {
     background-color: var(--lime);
     color: var(--on-lime);
+  }
+}
+
+/*
+ * Starting states for reveal animations (SectionReveal, Pill, Highlight, SplitText).
+ * They only apply when scripting is on, so crawlers and visitors without
+ * JavaScript always see the content; Motion animates out of these states.
+ */
+@media (scripting: enabled) {
+  [data-reveal-group] > *,
+  [data-pop],
+  [data-highlight-text] {
+    opacity: 0;
+  }
+
+  [data-highlight-bg] {
+    transform: scaleX(0);
+  }
+
+  [data-split-reveal] [data-split-char] {
+    transform: translateY(120%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-split-reveal] [data-split-char] {
+      transform: none;
+    }
+
+    [data-split-reveal] [data-split-line] {
+      opacity: 0;
+    }
   }
 }
 
