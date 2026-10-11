@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (PROMPT.md section 3).
+ * Dark is the default theme; light follows prefers-color-scheme.
+ * Custom CSS reads these variables directly (var(--lime)); Tailwind reaches the
+ * same values through the utilities mapped in @theme below (bg-lime, text-fg-2).
+ *
+ * z-index scale, taken from the prototype:
+ *   ambient -1 · navbar 50 · Bago 60 · scroll progress 70 · grain 85
+ *   cursor ring 89 · cursor dot 90 · page switch 96 · loader 100
+ */
+:root {
+  color-scheme: dark;
+
+  --bg: #0c0a1a;
+  --bg-2: #15122b;
+  --card: #1b1734;
+  --fg: #f2eeff;
+  --fg-2: #aba5c9;
+  --line: #2c2748;
+  --violet: #8a7cff;
+  --on-violet: #0c0a1a;
+  --lime: #c6f24e;
+  --on-lime: #0a0d00;
+  --lime-text: #c6f24e;
+  --pink: #ff9dbb;
+  --mint: #8ee3c8;
+
+  --glass: color-mix(in srgb, var(--card) 48%, transparent);
+  --glass-border: rgb(255 255 255 / 0.12);
+  --glass-highlight: rgb(255 255 255 / 0.1);
+
+  --grain-opacity: 0.055;
+
+  --display: var(--font-syne), "Arial Black", system-ui, sans-serif;
+  --body: var(--font-manrope), "Segoe UI", system-ui, -apple-system, sans-serif;
+  --serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+
+    --bg: #f4f2fb;
+    --bg-2: #e9e5f7;
+    --card: #ffffff;
+    --fg: #141029;
+    --fg-2: #565174;
+    --line: #d8d2ee;
+    --violet: #5440ee;
+    --on-violet: #ffffff;
+    --lime-text: #4a6b00;
+
+    --glass: color-mix(in srgb, #fff 55%, transparent);
+    --glass-border: rgb(20 16 41 / 0.09);
+    --glass-highlight: rgb(255 255 255 / 0.7);
+
+    --grain-opacity: 0.035;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-card: var(--card);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-line: var(--line);
+  --color-violet: var(--violet);
+  --color-on-violet: var(--on-violet);
+  --color-lime: var(--lime);
+  --color-on-lime: var(--on-lime);
+  --color-lime-text: var(--lime-text);
+  --color-pink: var(--pink);
+  --color-mint: var(--mint);
+  --color-glass: var(--glass);
+  --color-glass-border: var(--glass-border);
+
+  --font-sans: var(--body);
+  --font-display: var(--display);
+  --font-serif: var(--serif);
+}
+
+@theme {
+  --animate-drift: drift 24s ease-in-out infinite alternate;
+
+  @keyframes drift {
+    to {
+      transform: translate(12vw, -10vh) scale(1.2);
+    }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--display);
+    letter-spacing: -0.03em;
+  }
+
+  /* --lime-text is lime in dark mode and a darker lime in light mode, so the ring passes contrast in both. */
+  :focus-visible {
+    outline: 3px solid var(--lime-text);
+    outline-offset: 3px;
+  }
+
+  /* Anchor targets get tabindex="-1" so focus can follow a smooth scroll; they don't need a ring. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  ::selection {
+    background-color: var(--lime);
+    color: var(--on-lime);
+  }
+}
+
+/* Page container: 1240px wide with fluid side padding that clears notches in landscape. */
+@utility wrap {
+  margin-inline: auto;
+  max-width: 1240px;
+  padding-left: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px));
+}
+
+/* The one Instrument Serif italic accent per heading, e.g. "From code to checkout." */
+@utility serif-accent {
+  font-family: var(--serif);
+  font-size: 1.08em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
