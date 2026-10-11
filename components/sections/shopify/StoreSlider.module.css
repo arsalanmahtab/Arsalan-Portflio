@@ -1,0 +1,150 @@
+/* 3D coverflow of every store. Card transforms are set by StoreSlider. */
+
+.slider {
+  --card-width: min(320px, 74vw);
+  position: relative;
+  height: clamp(400px, 46vw, 470px);
+  /* Clip the side cards, but let the front card's glow spill below the slider. */
+  overflow-x: clip;
+  perspective: 1400px;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.slider[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.slider:focus-visible {
+  outline-offset: -3px;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  width: var(--card-width);
+  padding: 12px;
+  border-radius: 20px;
+  filter: brightness(0.62) saturate(0.7);
+  transition:
+    transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.6s,
+    filter 0.6s,
+    box-shadow 0.6s;
+  -webkit-user-drag: none;
+}
+
+.slider[data-dragging="true"] .card {
+  transition:
+    filter 0.6s,
+    box-shadow 0.6s;
+}
+
+.card[data-active="true"] {
+  filter: none;
+  box-shadow: 0 40px 80px -30px color-mix(in srgb, var(--lime) 60%, transparent);
+}
+
+.mock {
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.screen {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+/* The mock page scrolls when you hover the front card. */
+.page {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  transition: transform 2.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card[data-active="true"]:hover .page,
+.card[data-active="true"]:focus-visible .page {
+  transform: translateY(-42%);
+}
+
+.pageHero {
+  display: flex;
+  align-items: flex-end;
+  height: 112px;
+  padding: 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.pageRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.pageRow i {
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  background: #ece9f7;
+}
+
+.pageStrip {
+  height: 40px;
+  border-radius: 6px;
+  background: #ece9f7;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 6px 4px;
+}
+
+.info b {
+  display: block;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.info small {
+  color: var(--fg-2);
+}
+
+.go {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--on-lime);
+  transition:
+    rotate 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    scale 0.45s;
+}
+
+.card[data-active="true"]:hover .go {
+  rotate: 45deg;
+  scale: 1.1;
+}

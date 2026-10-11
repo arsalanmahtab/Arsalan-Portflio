@@ -1,7 +1,6 @@
 /* An endless row of large text with lime dots between items. */
 
 .row {
-  --gap: 48px;
   display: flex;
   overflow: hidden;
   white-space: nowrap;

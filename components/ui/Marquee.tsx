@@ -18,6 +18,8 @@ type Props = {
   pauseOnHover?: boolean;
   /** Lean into the scroll direction in proportion to scroll speed. */
   skew?: boolean;
+  /** Space between items and their dots, in px. */
+  gap?: number;
   /** Text size and font classes. */
   className?: string;
   /** Hide the whole row from screen readers when it only repeats nearby content. */
@@ -36,6 +38,7 @@ export function Marquee({
   duration = 28,
   pauseOnHover = false,
   skew = false,
+  gap = 48,
   className,
   decorative = false,
 }: Props) {
@@ -77,6 +80,7 @@ export function Marquee({
       ref={row}
       aria-hidden={decorative || undefined}
       className={clsx(styles.row, outline && styles.outline, pauseOnHover && styles.pausable, className)}
+      style={{ "--gap": `${gap}px` } as CSSProperties}
     >
       <div
         className={clsx(styles.track, reverse && styles.reverse)}

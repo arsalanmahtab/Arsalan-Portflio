@@ -1,0 +1,236 @@
+/* Shopify hero: background layers, floating chips and the scroll hint. */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* Perspective grid floor that scrolls toward the viewer. */
+.floor {
+  position: absolute;
+  right: -50%;
+  bottom: -6%;
+  left: -50%;
+  height: 52%;
+  overflow: hidden;
+  pointer-events: none;
+  transform: perspective(520px) rotateX(66deg);
+  transform-origin: bottom;
+  -webkit-mask-image: linear-gradient(transparent, #000 70%);
+  mask-image: linear-gradient(transparent, #000 70%);
+}
+
+/* Moving the grid by one cell with a transform loops seamlessly and stays on the compositor. */
+.grid {
+  position: absolute;
+  inset: -64px 0 0;
+  background-image:
+    linear-gradient(var(--line) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--line) 1.5px, transparent 1.5px);
+  background-size: 64px 64px;
+  animation: floor 2.6s linear infinite;
+}
+
+@keyframes floor {
+  to {
+    transform: translateY(64px);
+  }
+}
+
+/* Two soft glows behind the headline. */
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 72%;
+  width: min(62vw, 660px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--violet) 50%, transparent), transparent 65%);
+  pointer-events: none;
+  translate: -50% -50%;
+  animation: pulse 5s ease-in-out infinite;
+}
+
+.glowLime {
+  top: 24%;
+  left: 84%;
+  width: min(40vw, 420px);
+  background: radial-gradient(circle, color-mix(in srgb, var(--lime) 32%, transparent), transparent 65%);
+  animation-duration: 7s;
+  animation-delay: -2s;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.65;
+    transform: scale(1.18);
+  }
+}
+
+@media (max-width: 900px) {
+  .glow {
+    top: 76%;
+    left: 50%;
+  }
+
+  .glowLime {
+    display: none;
+  }
+}
+
+/* Floating notification chips. --x/--y place them on wide screens, --mx/--my on small ones. */
+.chips {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.chip {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+}
+
+.chipCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px 9px 9px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px -20px rgb(0 0 0 / 0.55);
+  font-size: 0.85rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  animation: float 4.2s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+.chipCard b,
+.chipCard small {
+  display: block;
+}
+
+.chipCard small {
+  color: var(--fg-2);
+}
+
+.chipIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--tint);
+  color: #1a1206;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/*
+ * Small screens: the copy fills most of the hero, so the chips float in the
+ * space reserved below it (where the robot sits) and --mx/--my are measured there.
+ */
+@media (max-width: 900px) {
+  .chips {
+    top: auto;
+    height: 42vh;
+  }
+
+  .chip {
+    top: var(--my);
+    left: var(--mx);
+  }
+
+  .desktopOnly {
+    display: none;
+  }
+}
+
+/* "Scroll" with a line that drips down. */
+.hint {
+  position: absolute;
+  z-index: 2;
+  bottom: 28px;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  translate: -50% 0;
+}
+
+.hint i {
+  width: 1.5px;
+  height: 44px;
+  background: linear-gradient(var(--fg-2), transparent);
+  transform-origin: top;
+  animation: drip 1.8s ease-in-out infinite;
+}
+
+@keyframes drip {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
+  }
+}
+
+/*
+ * Before the intro plays, everything it animates waits in its start state.
+ * Only with scripting on, so the hero is never hidden from crawlers or no-JS visitors.
+ */
+@media (scripting: enabled) {
+  .hero[data-intro="pending"] [data-hero-char] {
+    transform: translateY(120%);
+  }
+
+  .hero[data-intro="pending"] [data-hero-fade],
+  .hero[data-intro="pending"] [data-hero-chip],
+  .hero[data-intro="pending"] .floor,
+  .hero[data-intro="pending"] .hint {
+    opacity: 0;
+  }
+
+  /* Reduced motion: the headline fades in as a whole instead of rising letter by letter. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero[data-intro="pending"] [data-hero-char] {
+      transform: none;
+    }
+
+    .hero[data-intro="pending"] h1 {
+      opacity: 0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid {
+    animation-duration: 7.8s;
+  }
+
+  .hint i {
+    animation: none;
+  }
+}

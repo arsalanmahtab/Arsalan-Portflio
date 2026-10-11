@@ -15,6 +15,8 @@ export type ModeConfig = {
   sections: readonly { id: string; label: string }[];
   /** The pill in this page's hero that links to the other portfolio. */
   crossLink: { lead: string; action: string };
+  /** Line under the counter on the first-visit loader. */
+  loaderText: string;
 };
 
 export const modes: Record<Mode, ModeConfig> = {
@@ -31,6 +33,7 @@ export const modes: Record<Mode, ModeConfig> = {
       { id: "pricing", label: "Pricing" },
     ],
     crossLink: { lead: "Hiring a software engineer?", action: "See my full stack work" },
+    loaderText: "Building your store",
   },
   software: {
     path: "/software",
@@ -46,6 +49,7 @@ export const modes: Record<Mode, ModeConfig> = {
       { id: "projects", label: "Projects" },
     ],
     crossLink: { lead: "Need a Shopify store?", action: "See my Shopify portfolio" },
+    loaderText: "Building your product",
   },
 };
 

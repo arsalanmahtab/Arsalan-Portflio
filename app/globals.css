@@ -156,6 +156,31 @@
 @theme {
   --animate-drift: drift 24s ease-in-out infinite alternate;
   --animate-pulse-ring: pulse-ring 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-bob: bob 4s ease-in-out infinite;
+  --animate-angle: angle 5s linear infinite;
+  --animate-typing: typing 1s infinite;
+
+  /* Chat "thinking" dots. */
+  @keyframes typing {
+    30% {
+      opacity: 0.5;
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Gentle float for chips and badges; uses `translate` so it combines with transform animations. */
+  @keyframes bob {
+    50% {
+      translate: 0 -8px;
+    }
+  }
+
+  /* Turns a conic gradient drawn "from var(--angle)". */
+  @keyframes angle {
+    to {
+      --angle: 360deg;
+    }
+  }
 
   @keyframes drift {
     to {
@@ -222,13 +247,22 @@
   }
 }
 
+/* An animatable angle for rotating conic gradients (orbs, avatars, borders). */
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /*
- * Starting states for reveal animations (SectionReveal, Pill, Highlight, SplitText).
+ * Starting states for reveal animations (SectionReveal, Pill, Highlight, SplitText,
+ * and [data-reveal] items that a section animates in its own sequence).
  * They only apply when scripting is on, so crawlers and visitors without
  * JavaScript always see the content; Motion animates out of these states.
  */
 @media (scripting: enabled) {
   [data-reveal-group] > *,
+  [data-reveal],
   [data-pop],
   [data-highlight-text] {
     opacity: 0;

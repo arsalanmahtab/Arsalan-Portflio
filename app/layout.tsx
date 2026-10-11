@@ -7,11 +7,13 @@ import { AmbientBackground } from "@/components/layout/AmbientBackground";
 import { Cursor } from "@/components/layout/Cursor";
 import { Footer } from "@/components/layout/Footer";
 import { Grain } from "@/components/layout/Grain";
+import { Loader } from "@/components/layout/Loader";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { Providers } from "@/components/providers/Providers";
 import { site } from "@/config/site";
 import { contactLabels } from "@/data/contact";
+import { loaderGateScript } from "@/lib/loaderGate";
 
 /* globals.css adds weight-specific faces to the "… Fallback" families these generate. */
 const syne = Syne({
@@ -55,7 +57,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={clsx(syne.variable, manrope.variable, instrumentSerif.variable)}>
+    // suppressHydrationWarning: the inline script may add data-loader to <html> before React hydrates.
+    <html
+      lang="en"
+      className={clsx(syne.variable, manrope.variable, instrumentSerif.variable)}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: loaderGateScript }} />
+      </head>
       <body>
         <a
           href="#main"
@@ -66,6 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AmbientBackground />
         <ScrollProgress />
         <Providers>
+          <Loader />
           <Navbar />
           <main id="main" tabIndex={-1}>
             {children}
