@@ -1,0 +1,86 @@
+.button {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  /* The spinning square layers stick out at 45°; clip them so they never widen the page. */
+  overflow: clip;
+}
+
+/*
+ * The ring always turns once per 14s. A second layer adds speed on hover by
+ * resuming its own spin, so the ring speeds up (to one turn per 4s) without jumping.
+ */
+.spin,
+.boost {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.spin {
+  animation: spin 14s linear infinite;
+}
+
+.boost {
+  animation: spin 5.6s linear infinite paused;
+}
+
+.button:hover .boost,
+.button:focus-visible .boost {
+  animation-play-state: running;
+}
+
+.ring {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ring text {
+  fill: var(--fg);
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3.2px;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--on-lime);
+  transition: scale 0.4s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.button:hover .arrow,
+.button:focus-visible .arrow {
+  scale: 1.12;
+}
+
+.button:hover .arrow svg {
+  animation: nudge-up 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes nudge-up {
+  to {
+    translate: 0 -4px;
+  }
+}

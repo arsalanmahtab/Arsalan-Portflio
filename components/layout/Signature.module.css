@@ -1,0 +1,27 @@
+/* The signature sizes itself to this box's width (container query units). */
+.frame {
+  container-type: inline-size;
+}
+
+/*
+ * Outlined name that fills with lime from left to right as --fill goes 0% → 100%.
+ * "Arslan Mahtab" in Syne 800 at this tracking is about 11× its font size wide,
+ * so 100cqi / 11.3 keeps the whole name on one line with a little room to spare.
+ */
+.signature {
+  position: relative;
+  margin: 0 0 26px;
+  overflow: hidden;
+  font-family: var(--display);
+  font-size: 8vw;
+  font-size: min(calc(100cqi / 11.3), 12.5rem);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1.2px color-mix(in srgb, var(--fg) 30%, transparent);
+  background: linear-gradient(90deg, var(--lime), var(--lime)) no-repeat 0 0 / var(--fill, 0%) 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+}

@@ -43,6 +43,15 @@ export function useSmoothScroll() {
 const FOCUSABLE = "a[href], button, input, select, textarea, [tabindex]";
 
 /**
+ * The visible element with this id. Next.js keeps the previous home mounted but
+ * hidden, so both homes can have a #contact in the document at the same time.
+ */
+function findVisibleById(id: string) {
+  const matches = document.querySelectorAll<HTMLElement>(`[id="${CSS.escape(id)}"]`);
+  return Array.from(matches).find((element) => element.getClientRects().length > 0) ?? null;
+}
+
+/**
  * Lenis smooth scrolling, driven by the GSAP ticker and synced with ScrollTrigger.
  * Turned off for visitors who prefer reduced motion; the API then falls back to
  * native, instant scrolling so callers never need to check.
@@ -101,10 +110,11 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     };
   }, [reduced]);
 
-  // In-page anchor links scroll through Lenis, and focus follows for keyboard users.
+  // In-page anchor links scroll through Lenis (or jump natively with reduced motion),
+  // always to the visible target, and focus follows for keyboard users.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
-      if (!lenisRef.current || event.defaultPrevented || event.button !== 0) return;
+      if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       if (!(event.target instanceof Element)) return;
 
@@ -119,7 +129,14 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         url.search === location.search;
       if (!samePage || url.hash.length < 2) return;
 
-      const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+      const id = decodeURIComponent(url.hash.slice(1));
+      if (id === "top") {
+        event.preventDefault();
+        api.scrollTo(0);
+        return;
+      }
+
+      const target = findVisibleById(id);
       if (!target) return;
 
       event.preventDefault();

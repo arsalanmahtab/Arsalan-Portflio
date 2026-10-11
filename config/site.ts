@@ -5,6 +5,10 @@
 
 const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 
+/** The example values below; while either is still in place the contact section shows a placeholder note. */
+const EXAMPLE_EMAIL = "you@example.com";
+const EXAMPLE_WHATSAPP = "923000000000";
+
 export const site = {
   name: "Arslan Mahtab",
   role: "Software engineer and senior Shopify developer",
@@ -26,4 +30,10 @@ export const site = {
   whatsapp: "923000000000",
   linkedin: "https://pk.linkedin.com/in/arslan-mahtab",
   timeZone: "Asia/Karachi",
-} as const;
+
+  /** PLACEHOLDER decision: show the "Available for new projects" badge in the footer. */
+  available: true,
+};
+
+export const contactIsPlaceholder =
+  site.email === EXAMPLE_EMAIL || site.whatsapp === EXAMPLE_WHATSAPP;

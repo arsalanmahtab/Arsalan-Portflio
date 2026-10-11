@@ -4,10 +4,14 @@ import { Instrument_Serif, Manrope, Syne } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { AmbientBackground } from "@/components/layout/AmbientBackground";
+import { Cursor } from "@/components/layout/Cursor";
+import { Footer } from "@/components/layout/Footer";
 import { Grain } from "@/components/layout/Grain";
+import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
-import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { Providers } from "@/components/providers/Providers";
 import { site } from "@/config/site";
+import { contactLabels } from "@/data/contact";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -52,9 +56,22 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={clsx(syne.variable, manrope.variable, instrumentSerif.variable)}>
       <body>
+        <a
+          href="#main"
+          className="fixed top-3 left-3 z-110 translate-y-[-200%] rounded-full bg-lime px-5 py-3 font-bold text-on-lime focus-visible:translate-y-0"
+        >
+          {contactLabels.skipLink}
+        </a>
         <AmbientBackground />
         <ScrollProgress />
-        <SmoothScroll>{children}</SmoothScroll>
+        <Providers>
+          <Navbar />
+          <main id="main" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+        </Providers>
+        <Cursor />
         <Grain />
       </body>
     </html>

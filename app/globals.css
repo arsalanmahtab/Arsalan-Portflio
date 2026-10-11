@@ -84,15 +84,38 @@
 
 @theme {
   --animate-drift: drift 24s ease-in-out infinite alternate;
+  --animate-pulse-ring: pulse-ring 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 
   @keyframes drift {
     to {
       transform: translate(12vw, -10vh) scale(1.2);
     }
   }
+
+  /* Status dots: a ring that grows out of the dot and fades. */
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    70%,
+    100% {
+      transform: scale(3.2);
+      opacity: 0;
+    }
+  }
 }
 
 @layer base {
+  /* Keep the scrollbar's space when scrolling is locked, so the page doesn't jump sideways. */
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  html.lenis.lenis-stopped:not(.lenis-autoToggle) {
+    overflow: hidden;
+  }
+
   body {
     background-color: var(--bg);
     color: var(--fg);
@@ -134,6 +157,45 @@
   max-width: 1240px;
   padding-left: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px));
   padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px));
+}
+
+/* Frosted glass: navbar pill, cards, panels, chips, dialogs. */
+@utility glass {
+  background-color: var(--glass);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 30px 60px -32px rgb(0 0 0 / 0.55);
+}
+
+/* A diagonal light sheen that sweeps across glass on hover. */
+@utility glass-sheen {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 0.16) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    transform: translateX(120%);
+  }
+}
+
+/* Marks content you still need to replace, e.g. "[Your price]". */
+@utility ph {
+  border-radius: 4px;
+  background-color: color-mix(in srgb, var(--lime) 22%, transparent);
+  color: var(--fg);
+  padding: 1px 5px;
 }
 
 /* The one Instrument Serif italic accent per heading, e.g. "From code to checkout." */
