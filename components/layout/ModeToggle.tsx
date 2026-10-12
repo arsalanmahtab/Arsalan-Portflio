@@ -23,7 +23,7 @@ const icons: Record<Mode, ReactNode> = {
 
 /** [Shopify | Software] pill. The lime thumb springs to the chosen side as the page switch starts. */
 export function ModeToggle() {
-  const { mode, currentMode, switchTo } = useModeTransition();
+  const { mode, currentMode, switchTo, prefetch } = useModeTransition();
 
   return (
     <nav
@@ -37,6 +37,9 @@ export function ModeToggle() {
             key={option}
             href={modes[option].path}
             aria-current={currentMode === option ? "page" : undefined}
+            prefetch={false}
+            onPointerEnter={() => prefetch(option)}
+            onFocus={() => prefetch(option)}
             onNavigate={(event) => {
               event.preventDefault();
               switchTo(option);

@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* noscript: styles for visitors without JavaScript (e.g. FAQ answers shown open). */
+@custom-variant noscript (@media (scripting: none));
+
 /*
  * Design tokens (PROMPT.md section 3).
  * Dark is the default theme; light follows prefers-color-scheme.

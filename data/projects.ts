@@ -87,8 +87,3 @@ export const featuredWork: FeaturedProject[] = [
 export function domainOf(url: string) {
   return url.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "");
 }
-
-/** True for text written as a [placeholder]. */
-export function isPlaceholder(text: string) {
-  return text.startsWith("[") && text.endsWith("]");
-}

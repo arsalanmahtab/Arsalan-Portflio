@@ -130,3 +130,152 @@ export const storesSection = {
   previous: "Previous store",
   next: "Next store",
 };
+
+export const shopifyPlus = {
+  pill: "Shopify Plus",
+  title: ["Built to scale with", { accent: "Shopify Plus." }] as const,
+  lead: "For brands doing serious volume. I build with the Plus features that standard stores can't use, so your store grows without limits.",
+  checkout: {
+    title: "Checkout Extensibility",
+    text: "Custom checkout steps, upsells and trust badges that raise your average order value.",
+    item: ["Linen tote", "$52"],
+    upsell: ["Add matching pouch?", "+ $14"],
+    total: ["Total", "$66"],
+  },
+  functions: {
+    title: "Shopify Functions",
+    text: "Custom discount, shipping and payment rules written in code.",
+    code: ["fn", "discount.run()"],
+  },
+  b2b: {
+    title: "B2B and wholesale",
+    text: "Company accounts, price lists and payment terms on the same store.",
+    row: ["Wholesale price", "-30%"],
+  },
+  markets: {
+    title: "Shopify Markets",
+    text: "Sell worldwide with local currencies, languages and domains.",
+    currencies: ["USD $", "GBP £", "EUR €", "AED", "PKR ₨"],
+  },
+  flow: {
+    title: "Shopify Flow",
+    text: "Automations that tag orders, alert your team and restock for you.",
+  },
+  launchpad: {
+    title: "Launchpad",
+    text: "Schedule sales, theme changes and product drops to go live on their own, right on time.",
+    steps: ["Sale starts", "Theme switches", "Products go live", "Sale ends"],
+  },
+};
+
+export const aiAssistant = {
+  title: ["AI that helps", ["shoppers ", { accent: "buy." }]] as const,
+  lead: "I add AI features to Shopify stores so customers find the right product faster and you sell more.",
+  features: [
+    { icon: "search", title: "Smart search", text: "Understands what shoppers mean, typos included." },
+    { icon: "lines", title: "AI product descriptions", text: "On-brand copy for hundreds of products in minutes." },
+    { icon: "chat", title: "Shopping assistant", text: "Recommends products like a helpful salesperson." },
+  ] satisfies { icon: IconName; title: string; text: string }[],
+  chat: {
+    name: "Store assistant",
+    caption: "Demo of an AI feature",
+    question: "Show me a gift for my mum under $50",
+    reply: "Here are three gifts she'll love, all under $50:",
+    picks: [
+      { name: "Silk scarf", price: "$42", tint: "#F5C6D6" },
+      { name: "Candle set", price: "$36", tint: "#FFE2A8" },
+      { name: "Card holder", price: "$29", tint: "#CFC8FF" },
+    ],
+    followUp: "Want me to add gift wrapping?",
+    replay: "Replay demo",
+  },
+};
+
+export const voiceAssistant = {
+  pill: "New: AI voice",
+  title: ["Talk to my", { accent: "AI assistant." }] as const,
+  lead: "This is the kind of voice assistant I can add to your store. Shoppers ask out loud and get spoken answers and product picks. Try it: tap the orb and ask about my services.",
+  features: [
+    { icon: "mic", title: "Voice product search", text: "“Do you have this in blue?” answered in seconds." },
+    { icon: "chat", title: "Answers shopper questions", text: "Shipping, sizes and returns, any time of day." },
+    { icon: "phone", title: "Works on any phone", text: "Right in the browser, no app to download." },
+  ] satisfies { icon: IconName; title: string; text: string }[],
+  questions: [
+    "What services do you offer?",
+    "Do you work with Shopify Plus?",
+    "How long does a store take?",
+    "Can you add AI to my store?",
+    "Can you rank my store in ChatGPT?",
+  ],
+  status: {
+    idle: "Tap the orb and ask a question",
+    listening: "Listening, ask me anything",
+    thinking: "Thinking…",
+    speaking: "Speaking",
+    unsupported: "Voice input isn't supported in this browser. Tap a question below.",
+    noMicrophone: "Microphone isn't available here. Tap a question below.",
+    noSpeech: "I didn't catch that. Tap the orb to try again.",
+  },
+  you: "You",
+  assistant: "Assistant",
+  talk: "Talk to the AI assistant",
+  stop: "Stop listening",
+  questionsLabel: "Example questions",
+  note: "Demo assistant that answers questions about my services.",
+};
+
+export const webSection = {
+  pill: "Software engineer",
+  title: ["More than a", { accent: "Shopify developer." }] as const,
+  /** **double asterisks** mark the bold phrases. */
+  lead: "I'm a software engineer, so I also build **SaaS websites**, **web apps** and **WordPress sites**, and I migrate websites from one platform to another while protecting your content and SEO.",
+  cards: [
+    { icon: "app", title: "SaaS websites", text: "Marketing sites for software products that turn visitors into sign-ups." },
+    { icon: "dash", title: "Web apps and dashboards", text: "Custom apps built with React, Next.js and Node.js." },
+    { icon: "wp", title: "WordPress and WooCommerce", text: "Fast, custom WordPress sites that are easy for your team to edit." },
+  ] satisfies { icon: IconName; title: string; text: string }[],
+  migration: {
+    title: "Website migration, from any platform to any platform",
+    from: "From",
+    to: "To",
+    platforms: ["WordPress", "WooCommerce", "Wix", "Squarespace", "Magento"],
+    destination: "Shopify",
+    packets: ["Products", "Customers", "Orders", "Pages", "SEO"],
+    checklist: ["Products", "Customers", "Orders", "Pages and blog", "SEO redirects"],
+    progress: "Migrating",
+    done: "Migration complete",
+    label:
+      "Animated demo: a store moves from WordPress, WooCommerce, Wix, Squarespace or Magento to Shopify, bringing its products, customers, orders, pages and blog, and SEO redirects.",
+  },
+  platformsLabel: "Platforms I work with",
+  platforms: [
+    "Shopify",
+    "Shopify Plus",
+    "WordPress",
+    "WooCommerce",
+    "Webflow",
+    "Wix",
+    "Squarespace",
+    "Magento",
+    "BigCommerce",
+    "React",
+    "Next.js",
+    "Node.js",
+  ],
+};
+
+export const servicesSection = {
+  title: ["What I can", ["do for ", { accent: "you." }]] as const,
+  intro: "Shopify stores, SaaS websites, WordPress and AI features. Pick a category to filter.",
+  filterLabel: "Filter services",
+};
+
+export const pricingSection = {
+  title: ["Simple, clear", { accent: "pricing." }] as const,
+  lead: "Every store is different, so these are starting points. You'll get an exact quote after a quick call.",
+  popular: "Most popular",
+};
+
+export const faqSection = {
+  title: ["Questions,", { accent: "answered." }] as const,
+};

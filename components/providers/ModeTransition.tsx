@@ -23,6 +23,8 @@ type ModeTransitionApi = {
   /** The mode of the page actually on screen. */
   currentMode: Mode;
   switchTo: (mode: Mode) => void;
+  /** Fetch the other home ahead of a likely switch (hover or focus on a mode link). */
+  prefetch: (mode: Mode) => void;
 };
 
 const ModeTransitionContext = createContext<ModeTransitionApi | null>(null);
@@ -67,14 +69,25 @@ export function ModeTransition({ children }: { children: ReactNode }) {
   const [covered, setCovered] = useState(false);
   const busy = useRef(false);
 
+  // Mode links don't prefetch on sight: that would preload the other home's CSS on
+  // every visit, which Chrome flags as unused. The fetch starts on intent instead,
+  // and the panel's cover animation gives it time to land before the route changes.
+  const prefetch = useCallback(
+    (next: Mode) => {
+      if (next !== currentMode) router.prefetch(modes[next].path);
+    },
+    [currentMode, router],
+  );
+
   const switchTo = useCallback(
     (next: Mode) => {
       if (busy.current || next === currentMode) return;
       busy.current = true;
+      prefetch(next);
       scroll.stop();
       setTarget(next);
     },
-    [currentMode, scroll],
+    [currentMode, prefetch, scroll],
   );
 
   const onPanelAnimationComplete = (variant: unknown) => {
@@ -102,8 +115,8 @@ export function ModeTransition({ children }: { children: ReactNode }) {
   };
 
   const api = useMemo<ModeTransitionApi>(
-    () => ({ mode: target ?? currentMode, currentMode, switchTo }),
-    [target, currentMode, switchTo],
+    () => ({ mode: target ?? currentMode, currentMode, switchTo, prefetch }),
+    [target, currentMode, switchTo, prefetch],
   );
 
   return (

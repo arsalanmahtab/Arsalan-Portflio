@@ -2,19 +2,16 @@
 
 import clsx from "clsx";
 import { useRef } from "react";
-import { domainOf, featuredWork, isPlaceholder, type FeaturedProject } from "@/data/projects";
+import { domainOf, featuredWork, type FeaturedProject } from "@/data/projects";
 import { featuredSection as copy } from "@/data/shopify";
 import { AnimatedButton } from "@/components/ui/AnimatedButton";
 import { BrowserBar } from "@/components/ui/BrowserBar";
+import { MaybePlaceholder } from "@/components/ui/MaybePlaceholder";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { SplitText } from "@/components/ui/SplitText";
 import { gsap, useGSAP } from "@/lib/gsap";
 
 const panelClass = "w-[min(82vw,1000px)] rounded-[22px] p-6.5 max-[859px]:w-auto";
-
-function Value({ text }: { text: string }) {
-  return isPlaceholder(text) ? <span className="ph">{text}</span> : <>{text}</>;
-}
 
 /** A browser preview of the store whose page scrolls on hover. */
 function StorePreview({ project }: { project: FeaturedProject }) {
@@ -123,13 +120,13 @@ export function FeaturedWork() {
                       <div>
                         <dt className="font-bold">{copy.builtLabel}</dt>
                         <dd className="m-0 text-fg-2">
-                          <Value text={project.role} />
+                          <MaybePlaceholder text={project.role} />
                         </dd>
                       </div>
                       <div>
                         <dt className="font-bold">{copy.resultLabel}</dt>
                         <dd className="m-0 text-fg-2">
-                          <Value text={project.result} />
+                          <MaybePlaceholder text={project.result} />
                         </dd>
                       </div>
                     </dl>

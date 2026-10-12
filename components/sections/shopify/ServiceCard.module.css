@@ -1,0 +1,18 @@
+/* A soft violet spotlight that follows the cursor across a service card. */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in srgb, var(--violet) 35%, transparent),
+    transparent 55%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.card:hover::before {
+  opacity: 1;
+}

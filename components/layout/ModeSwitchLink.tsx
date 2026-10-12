@@ -6,13 +6,16 @@ import { useModeTransition } from "@/components/providers/ModeTransition";
 
 /** The glass pill in each hero that leads to the other portfolio, e.g. "Hiring a software engineer? See my full stack work →". */
 export function ModeSwitchLink({ from }: { from: Mode }) {
-  const { switchTo } = useModeTransition();
+  const { switchTo, prefetch } = useModeTransition();
   const to = otherMode(from);
   const { lead, action } = modes[from].crossLink;
 
   return (
     <Link
       href={modes[to].path}
+      prefetch={false}
+      onPointerEnter={() => prefetch(to)}
+      onFocus={() => prefetch(to)}
       onNavigate={(event) => {
         event.preventDefault();
         switchTo(to);

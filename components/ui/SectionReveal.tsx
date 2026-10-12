@@ -10,6 +10,7 @@ type Props = {
   children: ReactNode;
   className?: string;
   id?: string;
+  "aria-label"?: string;
   /** Seconds between each child. */
   stagger?: number;
   /** Seconds before the first child starts. */
@@ -29,6 +30,7 @@ export function SectionReveal({
   children,
   className,
   id,
+  "aria-label": label,
   stagger: gap = 0.08,
   delay = 0,
   distance = 50,
@@ -52,5 +54,5 @@ export function SectionReveal({
     );
   });
 
-  return createElement(as, { ref: scope, className, id, "data-reveal-group": "" }, children);
+  return createElement(as, { ref: scope, className, id, "aria-label": label, "data-reveal-group": "" }, children);
 }

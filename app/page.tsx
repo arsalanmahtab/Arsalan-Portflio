@@ -1,16 +1,23 @@
 /*
- * Shopify home, in the section order of PROMPT.md section 8. Stubs mark the
- * sections later phases build (lobby in 6, Plus to FAQ in 5, desk scene in 9).
+ * Shopify home, in the section order of PROMPT.md section 8. The reception
+ * stub is built in phase 6 and the developer desk scene joins in phase 9.
  */
 
 import { Contact } from "@/components/sections/shared/Contact";
 import { SectionStub } from "@/components/sections/shared/SectionStub";
+import { AiAssistant } from "@/components/sections/shopify/AiAssistant";
 import { AiRanking } from "@/components/sections/shopify/AiRanking";
 import { AllStores } from "@/components/sections/shopify/AllStores";
 import { CodeToCheckout } from "@/components/sections/shopify/CodeToCheckout";
+import { Faq } from "@/components/sections/shopify/Faq";
 import { FeaturedWork } from "@/components/sections/shopify/FeaturedWork";
 import { Hero } from "@/components/sections/shopify/Hero";
+import { Pricing } from "@/components/sections/shopify/Pricing";
+import { Services } from "@/components/sections/shopify/Services";
+import { ShopifyPlus } from "@/components/sections/shopify/ShopifyPlus";
 import { SkillsMarquee } from "@/components/sections/shopify/SkillsMarquee";
+import { VoiceAssistant } from "@/components/sections/shopify/VoiceAssistant";
+import { WebSaas } from "@/components/sections/shopify/WebSaas";
 
 export default function ShopifyHome() {
   return (
@@ -22,9 +29,13 @@ export default function ShopifyHome() {
       <CodeToCheckout />
       <FeaturedWork />
       <AllStores />
-      <SectionStub id="shopify-plus" title="Shopify Plus" phase={5} />
-      <SectionStub id="services" title="Services" phase={5} />
-      <SectionStub id="pricing" title="Pricing" phase={5} />
+      <ShopifyPlus />
+      <AiAssistant />
+      <VoiceAssistant />
+      <WebSaas />
+      <Services />
+      <Pricing />
+      <Faq />
       <Contact mode="shop" />
     </>
   );

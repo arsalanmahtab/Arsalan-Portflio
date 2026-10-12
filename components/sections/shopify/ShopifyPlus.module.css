@@ -1,0 +1,209 @@
+/* Mini animations inside the Shopify Plus tiles. All loops are CSS, so they cost no JavaScript. */
+
+.rows {
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Checkout: the upsell slides in, stays, then fades before the loop restarts. */
+.upsell {
+  background: color-mix(in srgb, var(--violet) 22%, transparent);
+  animation: upsell 6s ease-in-out infinite;
+}
+
+.upsell b {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--violet);
+  color: var(--on-violet);
+  font-size: 0.8rem;
+  animation: nudge 1.5s infinite;
+}
+
+@keyframes upsell {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  22%,
+  85% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes nudge {
+  50% {
+    scale: 1.08;
+  }
+}
+
+/* Functions: a code chip with a blinking caret. */
+.code {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #141029;
+  color: #dcd8f5;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.9rem;
+}
+
+.code em {
+  color: #ffb547;
+  font-style: normal;
+}
+
+.code::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  margin-left: 3px;
+  background: #ffb547;
+  vertical-align: text-bottom;
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Markets: currencies flip past one at a time; the first repeats at the end so the loop is seamless. */
+.ticker {
+  height: 2.4rem;
+  overflow: hidden;
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 2.4rem;
+}
+
+.ticker > span {
+  display: block;
+  animation: ticker 7.5s cubic-bezier(0.7, 0, 0.2, 1) infinite;
+}
+
+.ticker > span > span {
+  display: block;
+}
+
+@keyframes ticker {
+  0%,
+  16% {
+    transform: translateY(0);
+  }
+  20%,
+  36% {
+    transform: translateY(-2.4rem);
+  }
+  40%,
+  56% {
+    transform: translateY(-4.8rem);
+  }
+  60%,
+  76% {
+    transform: translateY(-7.2rem);
+  }
+  80%,
+  96% {
+    transform: translateY(-9.6rem);
+  }
+  100% {
+    transform: translateY(-12rem);
+  }
+}
+
+/* Flow: a dashed line runs between three pulsing nodes. */
+.flow path {
+  stroke-dasharray: 6 6;
+  animation: dash 1s linear infinite;
+}
+
+.flow circle {
+  animation: node 3s ease-in-out infinite;
+}
+
+.flow circle:nth-of-type(2) {
+  animation-delay: 0.5s;
+}
+
+.flow circle:nth-of-type(3) {
+  animation-delay: 1s;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+@keyframes node {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  15% {
+    opacity: 1;
+  }
+}
+
+/* Launchpad: each scheduled event lights up in turn. */
+.launch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.launch span {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  animation: launch 6s infinite;
+}
+
+.launch span:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+.launch span:nth-child(3) {
+  animation-delay: 3s;
+}
+
+.launch span:nth-child(4) {
+  animation-delay: 4.5s;
+}
+
+@keyframes launch {
+  0%,
+  100% {
+    background: transparent;
+    color: var(--fg);
+  }
+  8%,
+  22% {
+    border-color: var(--lime);
+    background: var(--lime);
+    color: var(--on-lime);
+  }
+}
