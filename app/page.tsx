@@ -1,10 +1,10 @@
 /*
- * Shopify home, in the section order of PROMPT.md section 8. The reception
- * stub is built in phase 6 and the developer desk scene joins in phase 9.
+ * Shopify home, in the section order of PROMPT.md section 8. The developer
+ * desk scene joins in phase 9.
  */
 
 import { Contact } from "@/components/sections/shared/Contact";
-import { SectionStub } from "@/components/sections/shared/SectionStub";
+import { ReceptionLobby } from "@/components/sections/shared/ReceptionLobby";
 import { AiAssistant } from "@/components/sections/shopify/AiAssistant";
 import { AiRanking } from "@/components/sections/shopify/AiRanking";
 import { AllStores } from "@/components/sections/shopify/AllStores";
@@ -23,7 +23,7 @@ export default function ShopifyHome() {
   return (
     <>
       <Hero />
-      <SectionStub id="reception" title="Reception" phase={6} cursor="Open" />
+      <ReceptionLobby set="shop" />
       <SkillsMarquee />
       <AiRanking />
       <CodeToCheckout />

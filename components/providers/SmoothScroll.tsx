@@ -26,6 +26,8 @@ export type SmoothScrollApi = {
   /** The live Lenis instance, or null when reduced motion turned smoothing off. */
   getLenis: () => Lenis | null;
   scrollTo: (target: ScrollTarget, options?: ScrollOptions) => void;
+  /** Scroll to the visible section with this id and move keyboard focus to it. False if there is none. */
+  goTo: (id: string) => boolean;
   /** Lock page scrolling, for example while a dialog is open. */
   stop: () => void;
   /** Unlock page scrolling again. */
@@ -60,23 +62,34 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
   const reduced = useReducedMotionSoft();
   const lenisRef = useRef<Lenis | null>(null);
 
-  const api = useMemo<SmoothScrollApi>(
-    () => ({
+  const api = useMemo<SmoothScrollApi>(() => {
+    const scrollTo: SmoothScrollApi["scrollTo"] = (
+      target,
+      { offset = 0, immediate = false, duration, force } = {},
+    ) => {
+      const lenis = lenisRef.current;
+      if (lenis) {
+        lenis.scrollTo(target, { offset, immediate, duration, force });
+        return;
+      }
+      const element =
+        typeof target === "string" ? document.querySelector<HTMLElement>(target) : target;
+      if (element === null) return;
+      const top =
+        typeof element === "number" ? element : element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: top + offset, behavior: "instant" });
+    };
+
+    return {
       getLenis: () => lenisRef.current,
-      scrollTo: (target, { offset = 0, immediate = false, duration, force } = {}) => {
-        const lenis = lenisRef.current;
-        if (lenis) {
-          lenis.scrollTo(target, { offset, immediate, duration, force });
-          return;
-        }
-        const element =
-          typeof target === "string" ? document.querySelector<HTMLElement>(target) : target;
-        if (element === null) return;
-        const top =
-          typeof element === "number"
-            ? element
-            : element.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: top + offset, behavior: "instant" });
+      scrollTo,
+      goTo: (id) => {
+        const target = findVisibleById(id);
+        if (!target) return false;
+        scrollTo(target);
+        if (!target.matches(FOCUSABLE)) target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+        return true;
       },
       stop: () => {
         if (lenisRef.current) lenisRef.current.stop();
@@ -86,9 +99,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         if (lenisRef.current) lenisRef.current.start();
         else document.documentElement.style.overflow = "";
       },
-    }),
-    [],
-  );
+    };
+  }, []);
 
   // Lenis on the GSAP ticker, so smooth scroll and ScrollTrigger share one frame loop.
   useEffect(() => {
@@ -136,13 +148,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         return;
       }
 
-      const target = findVisibleById(id);
-      if (!target) return;
-
-      event.preventDefault();
-      api.scrollTo(target);
-      if (!target.matches(FOCUSABLE)) target.setAttribute("tabindex", "-1");
-      target.focus({ preventScroll: true });
+      if (api.goTo(id)) event.preventDefault();
     };
 
     document.addEventListener("click", onClick, { capture: true });

@@ -1,0 +1,198 @@
+/* ---------- Scene: idle loops (paused while the scene is off screen) ---------- */
+
+.scene {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.scene[data-paused] * {
+  animation-play-state: paused;
+}
+
+.lamp {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.leaf {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sway 3.6s ease-in-out infinite;
+}
+
+.leaf + .leaf {
+  animation-delay: -1.4s;
+}
+
+.art {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: turn 30s linear infinite;
+}
+
+/* A light reflection crossing the gate's glass every 5.5s. */
+.sweep {
+  animation: sweep 5.5s ease-in-out infinite;
+}
+
+@keyframes glow {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes sway {
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes turn {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes sweep {
+  0%,
+  15% {
+    transform: translateX(-90px);
+  }
+  55%,
+  100% {
+    transform: translateX(230px);
+  }
+}
+
+/* ---------- Speech bubbles over the scene ---------- */
+
+/*
+ * Anchored at the speaker's head by left/top; --tail is where along the bubble
+ * the tail sits (0.5 = centred). max-content keeps bubbles near the right edge
+ * from wrapping into a narrow column.
+ */
+.bubble {
+  --tail: 0.5;
+  position: absolute;
+  z-index: 2;
+  width: max-content;
+  max-width: min(250px, 42%);
+  margin: 0;
+  padding: 9px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: 0 16px 30px -16px rgb(0 0 0 / 0.5);
+  font-size: clamp(0.66rem, 1.5vw, 0.92rem);
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  translate: calc(var(--tail) * -100%) -100%;
+  transform-origin: calc(var(--tail) * 100%) 100%;
+  opacity: 0;
+  scale: 0.5;
+  transition:
+    opacity 0.3s,
+    scale 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+  pointer-events: none;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: calc(var(--tail) * 100%);
+  width: 12px;
+  height: 12px;
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  background: inherit;
+  translate: -50% 0;
+  rotate: 45deg;
+}
+
+.bubble[data-show] {
+  opacity: 1;
+  scale: 1;
+}
+
+/* Without JavaScript the story can't play, so the receptionist's greeting just shows. */
+@media (scripting: none) {
+  .bubble[data-nojs] {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .bubble {
+    max-width: 46%;
+    padding: 6px 9px;
+    border-radius: 10px;
+  }
+
+  /* Keep the receptionist's bubble inside the frame. */
+  .bubble[data-role="receptionist"] {
+    --tail: 0.62;
+  }
+
+  /* The two bubbles at the desk would overlap on a phone: the receptionist waits while the visitor talks. */
+  .bubble[data-role="receptionist"][data-show]:has(~ .bubble[data-role="customer"][data-show]) {
+    opacity: 0;
+    scale: 0.5;
+  }
+}
+
+/* ---------- Service menu ---------- */
+
+/* Drops from the desk when the menu appears. */
+.beam {
+  position: absolute;
+  top: -28px;
+  left: 78.5%;
+  width: 3px;
+  height: 28px;
+  border-radius: 2px;
+  background: linear-gradient(var(--lime), transparent);
+  transform-origin: top;
+}
+
+@media (scripting: enabled) {
+  .beam {
+    transform: scaleY(0);
+  }
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  color: var(--fg);
+  text-align: left;
+  transition:
+    translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s,
+    border-color 0.35s;
+}
+
+.card:hover,
+.card:focus-visible {
+  translate: 0 -4px;
+  border-color: var(--lime);
+  box-shadow: 0 22px 40px -22px color-mix(in srgb, var(--lime) 65%, transparent);
+}
+
+.arrow {
+  flex: none;
+  margin-left: auto;
+  color: var(--lime-text);
+  transition: translate 0.3s;
+}
+
+.card:hover .arrow {
+  translate: 5px 0;
+}

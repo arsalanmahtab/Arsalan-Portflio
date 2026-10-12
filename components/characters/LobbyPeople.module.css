@@ -1,0 +1,84 @@
+/*
+ * Lobby people. Limbs swing from the hip and shoulder (top centre of their
+ * own box); the head nods from the neck. Walking and greeting are switched on
+ * with data attributes on the person.
+ */
+.limb {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+
+.head {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: nod 4s ease-in-out infinite;
+}
+
+.person[data-walking] .leftLeg {
+  animation: leg 0.5s ease-in-out infinite alternate;
+}
+
+.person[data-walking] .rightLeg {
+  animation: leg 0.5s ease-in-out infinite alternate-reverse;
+}
+
+.person[data-walking] .leftArm {
+  animation: arm 0.5s ease-in-out infinite alternate-reverse;
+}
+
+.person[data-walking] .rightArm {
+  animation: arm 0.5s ease-in-out infinite alternate;
+}
+
+.person[data-walking] .body {
+  animation: step 0.25s ease-in-out infinite alternate;
+}
+
+.person[data-greeting] .rightArm {
+  animation: wave 0.45s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .person[data-greeting] .rightArm {
+    animation-duration: 0.9s;
+  }
+}
+
+@keyframes nod {
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes leg {
+  from {
+    transform: rotate(24deg);
+  }
+  to {
+    transform: rotate(-24deg);
+  }
+}
+
+@keyframes arm {
+  from {
+    transform: rotate(18deg);
+  }
+  to {
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes step {
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes wave {
+  from {
+    transform: rotate(-150deg);
+  }
+  to {
+    transform: rotate(-112deg);
+  }
+}

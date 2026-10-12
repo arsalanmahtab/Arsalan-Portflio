@@ -1,11 +1,12 @@
 /*
  * Software home. The hero below and the section stubs are placeholders until
- * phases 6 to 8 build the real sections; the contact section is final.
+ * phases 7 and 8 build the real sections; the lobby and contact are final.
  */
 
 import type { Metadata } from "next";
 import { ModeSwitchLink } from "@/components/layout/ModeSwitchLink";
 import { Contact } from "@/components/sections/shared/Contact";
+import { ReceptionLobby } from "@/components/sections/shared/ReceptionLobby";
 import { SectionStub } from "@/components/sections/shared/SectionStub";
 import { SplitText } from "@/components/ui/SplitText";
 
@@ -33,7 +34,7 @@ export default function SoftwareHome() {
         <ModeSwitchLink from="software" />
       </section>
 
-      <SectionStub id="reception" title="Reception" phase={6} cursor="Open" />
+      <ReceptionLobby set="software" />
       <SectionStub id="about" title="Clean code. Calm delivery." phase={7} cursor="Say hi" />
       <SectionStub id="stack" title="One engineer, the whole stack" phase={7} />
       <SectionStub id="build" title="What I build" phase={7} />
