@@ -1,0 +1,118 @@
+/*
+ * The orbit: two dashed rings turning in opposite directions. Each pill sits on
+ * its ring and turns the other way at the same speed, so its text stays upright.
+ */
+.orbit {
+  position: relative;
+  width: min(520px, 100%);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.ring {
+  position: absolute;
+  border: 1px dashed color-mix(in srgb, var(--fg) 22%, transparent);
+  border-radius: 50%;
+  animation: turn 32s linear infinite;
+}
+
+.inner {
+  inset: 22%;
+}
+
+.outer {
+  inset: 3%;
+  animation-duration: 48s;
+  animation-direction: reverse;
+}
+
+.node {
+  position: absolute;
+  translate: -50% -50%;
+}
+
+.pill {
+  display: block;
+  padding: 7px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+  animation: turn 32s linear infinite reverse;
+}
+
+.outer .pill {
+  animation-duration: 48s;
+  animation-direction: normal;
+}
+
+.core {
+  position: absolute;
+  inset: 39%;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 70px -6px var(--lime);
+  color: var(--on-lime);
+  text-align: center;
+  animation: breathe 2.6s ease-in-out infinite;
+}
+
+.core b {
+  font-family: var(--display);
+  font-size: clamp(0.9rem, 2.4vw, 1.2rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.core small {
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+@keyframes turn {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes breathe {
+  50% {
+    scale: 1.08;
+  }
+}
+
+/* Phones: rings drawn in a little so the outer pills stay on screen. */
+@media (max-width: 640px) {
+  .inner {
+    inset: 26%;
+  }
+
+  .outer {
+    inset: 11%;
+  }
+
+  .pill {
+    padding: 5px 9px;
+    font-size: 0.72rem;
+  }
+}
+
+/* Reduced motion: the rings keep turning, three times slower. */
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .pill {
+    animation-duration: 96s;
+  }
+
+  .outer,
+  .outer .pill {
+    animation-duration: 144s;
+  }
+}

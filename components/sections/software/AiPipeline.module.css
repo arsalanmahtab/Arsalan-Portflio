@@ -1,0 +1,131 @@
+/*
+ * AI pipeline: five nodes that light up in turn, with the line to the next
+ * node filling just after. Side by side on wide screens, top to bottom on phones.
+ */
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 42px;
+  margin: 0 0 18px;
+  padding: 22px;
+  border-radius: 24px;
+  list-style: none;
+}
+
+.node {
+  position: relative;
+  padding: 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--fg) 4%, transparent);
+  animation: light 5s infinite;
+  animation-delay: calc(var(--i) * 0.8s);
+}
+
+.node b {
+  display: block;
+  font-family: var(--display);
+}
+
+.node small {
+  display: block;
+  color: var(--fg-2);
+  font-size: 0.85rem;
+}
+
+/* The line to the next node, in the gap after this one. */
+.link {
+  position: absolute;
+  top: 50%;
+  right: -38px;
+  width: 34px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--line);
+  translate: 0 -50%;
+}
+
+.link i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: fill 5s infinite;
+  animation-delay: calc(var(--i) * 0.8s + 0.4s);
+}
+
+@keyframes light {
+  0%,
+  100% {
+    border-color: var(--glass-border);
+    box-shadow: none;
+  }
+  6%,
+  22% {
+    border-color: var(--lime);
+    box-shadow: 0 0 30px -8px var(--lime);
+  }
+}
+
+@keyframes fill {
+  0% {
+    transform: scaleX(0);
+  }
+  10%,
+  60% {
+    transform: scaleX(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 760px) {
+  .pipeline {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .link {
+    top: auto;
+    right: auto;
+    bottom: -22px;
+    left: 50%;
+    width: 4px;
+    height: 18px;
+    translate: -50% 0;
+  }
+
+  .link i {
+    transform: scaleY(0);
+    transform-origin: top;
+    animation-name: fill-down;
+  }
+}
+
+@keyframes fill-down {
+  0% {
+    transform: scaleY(0);
+  }
+  10%,
+  60% {
+    transform: scaleY(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node,
+  .link i {
+    animation-duration: 8s;
+  }
+}

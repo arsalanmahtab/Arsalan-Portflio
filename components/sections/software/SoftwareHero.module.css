@@ -1,0 +1,167 @@
+/* Software hero: the code editor and the tech badges floating around it. */
+
+/* Room around the editor for the badges to overlap its edges. */
+.visual {
+  position: relative;
+  padding: 30px 10px;
+}
+
+/* --x/--y place a badge beside the copy; --mx/--my once the editor stacks below it. */
+.badge {
+  position: absolute;
+  z-index: 2;
+  top: var(--y);
+  left: var(--x);
+}
+
+.badgeLabel {
+  display: block;
+  padding: 8px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font-size: 0.85rem;
+  font-weight: 800;
+  white-space: nowrap;
+  animation: bob 4.5s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.lime .badgeLabel {
+  border-color: var(--lime);
+  background: var(--lime);
+  color: var(--on-lime);
+}
+
+@keyframes bob {
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+@media (max-width: 999px) {
+  .badge {
+    top: var(--my);
+    left: var(--mx);
+  }
+}
+
+@media (max-width: 640px) {
+  .badgeLabel {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ---------- Editor ---------- */
+
+.tab {
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--fg-2);
+  font: 500 0.78rem/1.4 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  white-space: nowrap;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.tab[data-active] {
+  background: color-mix(in srgb, var(--fg) 10%, transparent);
+  color: var(--fg);
+}
+
+.code {
+  grid-area: 1 / 1;
+  margin: 0;
+  padding: 20px;
+  color: var(--fg);
+  font: 500 clamp(0.72rem, 1.3vw, 0.86rem) / 1.75 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Copies of every snippet, invisible, so the editor is always as tall as the longest one. */
+.sizer {
+  visibility: hidden;
+}
+
+.keyword {
+  color: var(--violet);
+}
+
+.string {
+  color: var(--lime-text);
+}
+
+.function {
+  color: var(--pink);
+}
+
+@media (prefers-color-scheme: light) {
+  .function {
+    color: #c2417a;
+  }
+}
+
+.current {
+  animation: appear 0.35s ease-out;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Not yet typed: laid out but invisible. */
+.pending {
+  visibility: hidden;
+}
+
+/* Takes no space itself (the block is drawn beside it), so it never re-wraps a line. */
+.caret {
+  position: relative;
+}
+
+.caret::after {
+  content: "";
+  position: absolute;
+  top: 0.15em;
+  left: 0;
+  width: 0.55em;
+  height: 1.1em;
+  background: var(--lime);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.toast {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--lime);
+  color: var(--on-lime);
+  font-size: 0.88rem;
+  font-weight: 800;
+  white-space: nowrap;
+  translate: -50% 20px;
+  opacity: 0;
+  transition:
+    opacity 0.35s,
+    translate 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+
+.toast[data-show] {
+  translate: -50% 0;
+  opacity: 1;
+}

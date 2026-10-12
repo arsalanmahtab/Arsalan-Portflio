@@ -1,14 +1,18 @@
 /*
- * Software home. The hero below and the section stubs are placeholders until
- * phases 7 and 8 build the real sections; the lobby and contact are final.
+ * Software home, in the section order of PROMPT.md section 9. The 3D developer
+ * android joins the About section in phase 8.
  */
 
 import type { Metadata } from "next";
-import { ModeSwitchLink } from "@/components/layout/ModeSwitchLink";
 import { Contact } from "@/components/sections/shared/Contact";
 import { ReceptionLobby } from "@/components/sections/shared/ReceptionLobby";
-import { SectionStub } from "@/components/sections/shared/SectionStub";
-import { SplitText } from "@/components/ui/SplitText";
+import { About } from "@/components/sections/software/About";
+import { AiPipeline } from "@/components/sections/software/AiPipeline";
+import { SaasLaunch } from "@/components/sections/software/SaasLaunch";
+import { SoftwareHero } from "@/components/sections/software/SoftwareHero";
+import { SoftwareProjects } from "@/components/sections/software/SoftwareProjects";
+import { Stack } from "@/components/sections/software/Stack";
+import { WhatIBuild } from "@/components/sections/software/WhatIBuild";
 
 export const metadata: Metadata = {
   title: { absolute: "Arslan Mahtab, full stack software engineer" },
@@ -19,29 +23,14 @@ export const metadata: Metadata = {
 export default function SoftwareHome() {
   return (
     <>
-      <section className="wrap flex min-h-svh flex-col justify-center pt-28 pb-20">
-        <p className="mb-5 font-semibold text-fg-2">Arslan Mahtab, full stack software engineer</p>
-        <SplitText
-          as="h1"
-          lines={["Full stack", "& AI apps for", { accent: "SaaS products." }]}
-          lineClassNames={[undefined, undefined, "text-violet"]}
-          className="mb-8 text-[clamp(2.8rem,7vw,6.2rem)] leading-[0.92] font-extrabold tracking-tighter"
-        />
-        <p className="max-w-[30em] text-xl text-fg-2">
-          I build SaaS products, web apps and AI-powered tools end to end, from the database and
-          APIs to a fast, polished front end.
-        </p>
-        <ModeSwitchLink from="software" />
-      </section>
-
+      <SoftwareHero />
       <ReceptionLobby set="software" />
-      <SectionStub id="about" title="Clean code. Calm delivery." phase={7} cursor="Say hi" />
-      <SectionStub id="stack" title="One engineer, the whole stack" phase={7} />
-      <SectionStub id="build" title="What I build" phase={7} />
-      <SectionStub id="ai" title="AI apps, end to end" phase={7} />
-      <SectionStub id="saas" title="Next.js SaaS, idea to launch" phase={7} />
-      <SectionStub id="projects" title="Software projects" phase={7} />
-
+      <About />
+      <Stack />
+      <WhatIBuild />
+      <AiPipeline />
+      <SaasLaunch />
+      <SoftwareProjects />
       <Contact mode="software" />
     </>
   );
