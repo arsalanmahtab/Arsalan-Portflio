@@ -229,13 +229,13 @@ export function Hero() {
       </div>
 
       {/* The headline scales with the screen's height as well as its width, so the whole hero fits on one screen. */}
-      <div ref={inner} className="wrap relative z-2 w-full pt-24 pb-14 max-[900px]:pb-[38vh]">
+      <div ref={inner} className="wrap relative z-2 w-full pt-22 pb-10 max-[900px]:pb-[38vh]">
         <p data-hero-fade="" className="mb-4 font-semibold text-fg-2">
           {copy.kicker}
         </p>
         <h1
           id="hero-title"
-          className="mb-6 max-w-[9.5em] text-[clamp(2.6rem,min(6.6vw,10vh),6.4rem)] leading-[0.9] font-extrabold tracking-tighter"
+          className="mb-5 max-w-[9.5em] text-[clamp(2.6rem,min(6.6vw,9.4vh),6.4rem)] leading-[0.9] font-extrabold tracking-tighter"
         >
           <span className="sr-only">{`${copy.titleLines.join(" ")} ${copy.rotatingWords[0]}`}</span>
           <span aria-hidden="true">
