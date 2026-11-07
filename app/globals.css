@@ -29,6 +29,7 @@
   --lime-text: #c6f24e;
   --pink: #ff9dbb;
   --mint: #8ee3c8;
+  --danger: #ff8f8f;
 
   --glass: color-mix(in srgb, var(--card) 48%, transparent);
   --glass-border: rgb(255 255 255 / 0.12);
@@ -125,6 +126,7 @@
     --violet: #5440ee;
     --on-violet: #ffffff;
     --lime-text: #4a6b00;
+    --danger: #c42b2b;
 
     --glass: color-mix(in srgb, #fff 55%, transparent);
     --glass-border: rgb(20 16 41 / 0.09);
@@ -148,6 +150,7 @@
   --color-lime-text: var(--lime-text);
   --color-pink: var(--pink);
   --color-mint: var(--mint);
+  --color-danger: var(--danger);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
 

@@ -82,6 +82,24 @@
   }
 }
 
+/*
+ * The 3D robot: across the whole hero on wide screens (it sits right of the
+ * headline), and in the space reserved below the copy on small ones.
+ */
+.robot {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .robot {
+    top: auto;
+    height: 42vh;
+  }
+}
+
 /* Floating notification chips. --x/--y place them on wide screens, --mx/--my on small ones. */
 .chips {
   position: absolute;
@@ -208,6 +226,7 @@
 
   .hero[data-intro="pending"] [data-hero-fade],
   .hero[data-intro="pending"] [data-hero-chip],
+  .hero[data-intro="pending"] .robot,
   .hero[data-intro="pending"] .floor,
   .hero[data-intro="pending"] .hint {
     opacity: 0;

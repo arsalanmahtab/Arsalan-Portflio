@@ -75,6 +75,19 @@ export const aboutSection = {
     { title: "Clear communication", text: "Regular updates, no surprises." },
     { title: "Built to scale", text: "Architecture that grows with your users." },
   ],
+  /** The 3D developer android beside the values. Each greeting says the next line. */
+  android: {
+    label: "Animated 3D developer character. Press to say hi.",
+    hint: "Tap me to say hi",
+    lines: [
+      "Hi! Let's build something great.",
+      "Clean code, every time.",
+      "Shipping your SaaS this sprint?",
+      "React, Laravel or Next.js?",
+      "AI agents? I've got you.",
+      "Tests passed. Deploying.",
+    ],
+  },
 };
 
 export const stackSection = {

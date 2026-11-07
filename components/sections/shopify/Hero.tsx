@@ -4,11 +4,14 @@ import clsx from "clsx";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { shopifyHero as copy } from "@/data/shopify";
+import { HeroRobotScene } from "@/components/characters/scenes";
+import { Stage3D } from "@/components/characters/Stage3D";
 import { ModeSwitchLink } from "@/components/layout/ModeSwitchLink";
 import { AnimatedButton } from "@/components/ui/AnimatedButton";
 import { Highlight } from "@/components/ui/Highlight";
 import { Icon } from "@/components/ui/Icon";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { usePointer } from "@/lib/hooks/usePointer";
 import { useReducedMotionSoft } from "@/lib/hooks/useReducedMotionSoft";
 import { useIntroReady } from "@/lib/intro";
@@ -32,16 +35,18 @@ function Letters({ text, rotating = false }: { text: string; rotating?: boolean 
 
 /**
  * Shopify home hero: letter-by-letter headline with a rotating last line, lime
- * highlight, floating notification chips with mouse parallax, perspective floor
- * and glows. The intro waits for the first-visit loader; the copy lifts away as
- * you scroll. (The 3D robot joins in phase 8.)
+ * highlight, the 3D robot in its AI sphere, floating notification chips with
+ * mouse parallax, perspective floor and glows. The intro waits for the
+ * first-visit loader; as you scroll away the copy lifts and the robot turns.
  */
 export function Hero() {
   const root = useRef<HTMLElement>(null);
   const inner = useRef<HTMLDivElement>(null);
   const chipLayer = useRef<HTMLDivElement>(null);
+  const robotScroll = useRef(0);
   const introReady = useIntroReady();
   const reduced = useReducedMotionSoft();
+  const wide = useMediaQuery("(min-width: 901px)");
   const { fine } = usePointer();
   const inView = useInView(root, { amount: 0.2 });
 
@@ -61,7 +66,7 @@ export function Hero() {
 
       if (reduced) {
         tl.fromTo(
-          [...q("h1"), ...q("[data-hero-fade]"), ...q("[data-hero-chip]")],
+          [...q("h1"), ...q("[data-hero-fade]"), ...q("[data-hero-chip]"), ...q("[data-hero-robot]")],
           { opacity: 0 },
           { opacity: 1, duration: 0.5, stagger: 0.05 },
         )
@@ -83,6 +88,7 @@ export function Hero() {
           "-=0.8",
         )
         .fromTo(q("[data-hero-backdrop='floor']"), { opacity: 0 }, { opacity: 1, duration: 1.2 }, 0)
+        .fromTo(q("[data-hero-robot]"), { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 1.8, ease: "power2.out" }, 0)
         .fromTo(q("[data-hero-backdrop='hint']"), { opacity: 0 }, { opacity: 1, duration: 0.6 }, "-=0.3")
         .fromTo(
           q("[data-hero-chip]"),
@@ -154,12 +160,23 @@ export function Hero() {
     { scope: root, dependencies: [fine, reduced], revertOnUpdate: true },
   );
 
-  // As you scroll away, the copy lifts and fades and the chips float off.
+  // As you scroll away, the copy lifts and fades, the chips float off and the robot's world turns.
   useGSAP(
     () => {
       if (reduced || !root.current) return;
       const trigger = { trigger: root.current, start: "top top", scrub: true };
-      gsap.to(inner.current, { yPercent: -25, opacity: 0, ease: "none", scrollTrigger: { ...trigger, end: "bottom top" } });
+      gsap.to(inner.current, {
+        yPercent: -25,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          ...trigger,
+          end: "bottom top",
+          onUpdate: (self) => {
+            robotScroll.current = self.progress;
+          },
+        },
+      });
       gsap.to(chipLayer.current, { yPercent: -35, opacity: 0, ease: "none", scrollTrigger: { ...trigger, end: "80% top" } });
     },
     { scope: root, dependencies: [reduced], revertOnUpdate: true },
@@ -172,6 +189,15 @@ export function Hero() {
       </div>
       <div aria-hidden="true" className={styles.glow} />
       <div aria-hidden="true" className={clsx(styles.glow, styles.glowLime)} />
+
+      <Stage3D
+        aria-hidden="true"
+        data-hero-robot=""
+        className={styles.robot}
+        scene={HeroRobotScene}
+        sceneProps={{ layout: wide ? "wide" : "narrow", scroll: robotScroll, reduced }}
+        eager
+      />
 
       <div ref={chipLayer} aria-hidden="true" className={styles.chips}>
         {copy.chips.map((chip, index) => (

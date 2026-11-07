@@ -4,11 +4,9 @@ import { Pill } from "@/components/ui/Pill";
 import { SectionReveal } from "@/components/ui/SectionReveal";
 import { SplitText } from "@/components/ui/SplitText";
 import { sectionClass, sectionTitleClass } from "@/lib/styles";
+import { DevAndroid } from "./DevAndroid";
 
-/**
- * "Clean code. Calm delivery." Three values with lime check tiles, beside the
- * stage where the 3D developer android stands.
- */
+/** "Clean code. Calm delivery." Three values with lime check tiles, beside the 3D developer android. */
 export function About() {
   return (
     <section id="about" className={sectionClass}>
@@ -32,18 +30,7 @@ export function About() {
           </SectionReveal>
         </div>
 
-        {/*
-          TEMPORARY (phase 8 puts the 3D developer android here): the stage keeps
-          its final size and glow so the layout doesn't move when the android arrives.
-        */}
-        <div
-          data-cursor="Say hi"
-          className="relative grid h-[clamp(400px,48vw,580px)] place-items-center rounded-[32px] before:pointer-events-none before:absolute before:inset-[6%_8%] before:rounded-full before:bg-[radial-gradient(circle,color-mix(in_srgb,var(--violet)_38%,transparent),transparent_66%)]"
-        >
-          <p className="relative m-0 rounded-full border border-dashed border-line px-4 py-2 text-sm font-semibold text-fg-2">
-            Placeholder · 3D developer android, phase 8
-          </p>
-        </div>
+        <DevAndroid />
       </div>
     </section>
   );

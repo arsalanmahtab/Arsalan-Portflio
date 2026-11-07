@@ -37,6 +37,6 @@ export const faq: FaqItem[] = [
   },
   {
     question: "How do we get started?",
-    answer: "Send me a message on email or WhatsApp. We'll have a quick call, then I'll send you a clear plan and quote.",
+    answer: "Send me a message with the contact form, by email or on LinkedIn. We'll have a quick call, then I'll send you a clear plan and quote.",
   },
 ];

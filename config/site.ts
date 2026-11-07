@@ -5,9 +5,8 @@
 
 const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 
-/** The example values below; while either is still in place the contact section shows a placeholder note. */
+/** While the example email is still in place, the contact section shows a placeholder note. */
 const EXAMPLE_EMAIL = "you@example.com";
-const EXAMPLE_WHATSAPP = "923000000000";
 
 export const site = {
   name: "Arslan Mahtab",
@@ -24,16 +23,13 @@ export const site = {
     process.env.NEXT_PUBLIC_SITE_URL ??
     (vercelUrl ? `https://${vercelUrl}` : "http://localhost:3000"),
 
-  /** PLACEHOLDER: your real email address. */
-  email: "you@example.com",
-  /** PLACEHOLDER: your WhatsApp number in international format, digits only. */
-  whatsapp: "923000000000",
-  linkedin: "https://pk.linkedin.com/in/arslan-mahtab",
+  /** Where contact-form messages are delivered, and the "Email me" button. */
+  email: "arslanmehtab13@gmail.com",
+  linkedin: "https://www.linkedin.com/in/arslan-mahtab",
   timeZone: "Asia/Karachi",
 
   /** PLACEHOLDER decision: show the "Available for new projects" badge in the footer. */
   available: true,
 };
 
-export const contactIsPlaceholder =
-  site.email === EXAMPLE_EMAIL || site.whatsapp === EXAMPLE_WHATSAPP;
+export const contactIsPlaceholder = site.email === EXAMPLE_EMAIL;

@@ -41,14 +41,14 @@ export const keywordAnswers: { pattern: RegExp; answer: string }[] = [
       "Arslan builds new Shopify stores, custom themes, store migrations, speed fixes, SEO, and AI features like smart search and voice assistants.",
   },
   {
-    pattern: /contact|hire|reach|email|whatsapp|call|talk to/i,
-    answer: "Scroll to the bottom of the page and tap Email me or WhatsApp. Arslan will get back to you.",
+    pattern: /contact|hire|reach|email|message|linkedin|call|talk to/i,
+    answer: "Scroll to the bottom of the page and send Arslan a message with the contact form, or tap Email me. He will get back to you.",
   },
   { pattern: /hello|hi\b|hey|who are you/i, answer: "Hi! I'm Arslan's AI assistant. Ask me about his Shopify services." },
 ];
 
 export const defaultAnswer =
-  "Good question. Arslan can answer that on a quick call. Tap Email me or WhatsApp at the bottom of the page.";
+  "Good question. Arslan can answer that on a quick call. Send him a message with the contact form at the bottom of the page.";
 
 export function answerFromKeywords(question: string) {
   return keywordAnswers.find((rule) => rule.pattern.test(question))?.answer ?? defaultAnswer;
@@ -65,7 +65,7 @@ He also builds Next.js SaaS products, full stack web apps (React or Next.js with
 
 Rules:
 - Prices and timelines depend on the project: say so and suggest a quick call. Never invent prices, dates, clients or results.
-- To get in touch, visitors tap Email me or WhatsApp at the bottom of the page.
+- To get in touch, visitors use the contact form at the bottom of the page, tap Email me, or message him on LinkedIn.
 - If a question is not about Arslan's work, answer briefly and steer back to how he can help.
 
 Latency-sensitive; begin your visible answer immediately.`;
