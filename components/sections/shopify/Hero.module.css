@@ -96,7 +96,7 @@
 @media (max-width: 900px) {
   .robot {
     top: auto;
-    height: 42vh;
+    height: 38vh;
   }
 }
 
@@ -165,7 +165,7 @@
 @media (max-width: 900px) {
   .chips {
     top: auto;
-    height: 42vh;
+    height: 38vh;
   }
 
   .chip {

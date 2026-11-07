@@ -13,7 +13,7 @@ import {
   type MouseEvent,
   type PointerEvent,
 } from "react";
-import { domainOf, type Project } from "@/data/projects";
+import { domainOf, storeGradient, type Project } from "@/data/projects";
 import { storesSection as copy } from "@/data/shopify";
 import { BrowserBar } from "@/components/ui/BrowserBar";
 import { Icon } from "@/components/ui/Icon";
@@ -26,21 +26,6 @@ const AUTOPLAY_MS = 2800;
 const VISIBLE_STEPS = 3.3;
 /** Fraction of a card width between neighbouring cards. */
 const SPACING = 0.62;
-
-const GRADIENTS = [
-  ["#5440EE", "#8A7CFF"],
-  ["#1F7A5C", "#47C79A"],
-  ["#B5446E", "#F28AB2"],
-  ["#C2611F", "#F2A04E"],
-  ["#1E4FA8", "#5B8DEF"],
-  ["#5B2C83", "#A06CD5"],
-  ["#2B2D42", "#6C7293"],
-  ["#8C2F39", "#D9595F"],
-  ["#0F6E7A", "#3BB7C4"],
-  ["#14141C", "#3A3A55"],
-];
-
-const hashOf = (text: string) => Array.from(text).reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 7);
 
 /** Offset of card `index` from the front card, wrapped to the shortest way round. */
 function offsetOf(index: number, current: number, total: number) {
@@ -197,7 +182,7 @@ export function StoreSlider({ projects }: { projects: Project[] }) {
         <div ref={stage} data-pop="" className={styles.stage}>
           {projects.map((project, index) => {
             const domain = domainOf(project.url);
-            const [from, to] = GRADIENTS[hashOf(project.name) % GRADIENTS.length];
+            const [from, to] = storeGradient(project.name);
             const active = index === current;
             return (
               <a

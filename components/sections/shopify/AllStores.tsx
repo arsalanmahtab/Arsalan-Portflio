@@ -8,7 +8,7 @@ import { StoreSlider } from "@/components/sections/shopify/StoreSlider";
 import { Marquee } from "@/components/ui/Marquee";
 import { useInViewOnce, useRevealOnce } from "@/lib/hooks/useInViewOnce";
 import { useReducedMotionSoft } from "@/lib/hooks/useReducedMotionSoft";
-import { leadClass } from "@/lib/styles";
+import { leadClass, sectionClass } from "@/lib/styles";
 
 const nameRow = "font-display text-[clamp(1.5rem,3.2vw,2.5rem)] font-extrabold tracking-[-0.03em]";
 const names = projects.map((project) => project.name);
@@ -40,7 +40,7 @@ export function AllStores() {
   });
 
   return (
-    <section id="stores" className="border-t border-line py-[clamp(80px,11vw,150px)]">
+    <section id="stores" className={sectionClass}>
       <div className="wrap">
         <h2
           ref={heading}

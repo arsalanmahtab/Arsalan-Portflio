@@ -58,7 +58,7 @@ function Block({ className, children }: { className?: string; children: ReactNod
 }
 
 /**
- * "From code to checkout." Pinned for about 2600px of scroll: Liquid code types
+ * "From code to checkout." Pinned for about 1800px of scroll: Liquid code types
  * in, fades, wireframe blocks pop in and fill with a real store, Add to cart is
  * pressed and an order arrives. The steps on the left follow along.
  */
@@ -76,7 +76,7 @@ export function CodeToCheckout() {
           scrollTrigger: {
             trigger: root.current,
             start: "top top",
-            end: "+=2600",
+            end: "+=1800",
             pin: true,
             scrub: 1,
             onUpdate: (self) => setStep(self.progress < 0.4 ? 0 : self.progress < 0.75 ? 1 : 2),

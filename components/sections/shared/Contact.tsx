@@ -15,7 +15,7 @@ export function Contact({ mode }: { mode: Mode }) {
   const linkedinShort = site.linkedin.replace(/^https?:\/\/(www\.)?/, "");
 
   return (
-    <section id="contact" className="border-t border-line pt-[clamp(90px,12vw,170px)]">
+    <section id="contact" className="border-t border-line pt-[clamp(64px,7.5vw,112px)]">
       <div className="wrap">
         <ClosingLine {...copy.closing} />
 

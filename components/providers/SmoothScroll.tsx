@@ -61,6 +61,8 @@ function findVisibleById(id: string) {
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const reduced = useReducedMotionSoft();
   const lenisRef = useRef<Lenis | null>(null);
+  /** Whether scrolling is locked, so a lock made before Lenis exists carries over to it. */
+  const stoppedRef = useRef(false);
 
   const api = useMemo<SmoothScrollApi>(() => {
     const scrollTo: SmoothScrollApi["scrollTo"] = (
@@ -92,12 +94,17 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         return true;
       },
       stop: () => {
+        stoppedRef.current = true;
         if (lenisRef.current) lenisRef.current.stop();
         else document.documentElement.style.overflow = "hidden";
       },
       start: () => {
-        if (lenisRef.current) lenisRef.current.start();
-        else document.documentElement.style.overflow = "";
+        stoppedRef.current = false;
+        lenisRef.current?.start();
+        // Always clear the fallback lock: the loader calls stop() before Lenis is
+        // created and start() after, and a leftover overflow: hidden on <html>
+        // blocks native touch scrolling on phones (Lenis only drives the wheel).
+        document.documentElement.style.overflow = "";
       },
     };
   }, []);
@@ -109,6 +116,11 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     const lenis = new Lenis({ lerp: 0.09 });
     lenisRef.current = lenis;
     lenis.on("scroll", ScrollTrigger.update);
+    // Hand an earlier fallback lock over to Lenis.
+    if (stoppedRef.current) {
+      document.documentElement.style.overflow = "";
+      lenis.stop();
+    }
 
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
@@ -119,6 +131,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       gsap.ticker.lagSmoothing(500, 33);
       lenis.destroy();
       lenisRef.current = null;
+      if (stoppedRef.current) document.documentElement.style.overflow = "hidden";
     };
   }, [reduced]);
 

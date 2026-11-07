@@ -228,13 +228,14 @@ export function Hero() {
         ))}
       </div>
 
-      <div ref={inner} className="wrap relative z-2 w-full pt-27.5 pb-22.5 max-[900px]:pt-24 max-[900px]:pb-[42vh]">
-        <p data-hero-fade="" className="mb-5 font-semibold text-fg-2">
+      {/* The headline scales with the screen's height as well as its width, so the whole hero fits on one screen. */}
+      <div ref={inner} className="wrap relative z-2 w-full pt-24 pb-14 max-[900px]:pb-[38vh]">
+        <p data-hero-fade="" className="mb-4 font-semibold text-fg-2">
           {copy.kicker}
         </p>
         <h1
           id="hero-title"
-          className="mb-7.5 max-w-[9.5em] text-[clamp(3rem,9vw,8.4rem)] leading-[0.9] font-extrabold tracking-tighter"
+          className="mb-6 max-w-[9.5em] text-[clamp(2.6rem,min(6.6vw,10vh),6.4rem)] leading-[0.9] font-extrabold tracking-tighter"
         >
           <span className="sr-only">{`${copy.titleLines.join(" ")} ${copy.rotatingWords[0]}`}</span>
           <span aria-hidden="true">
@@ -250,10 +251,10 @@ export function Hero() {
             </span>
           </span>
         </h1>
-        <p className="mb-7.5 font-display text-[clamp(1.05rem,2vw,1.3rem)] tracking-[-0.01em]">
+        <p className="mb-6 font-display text-[clamp(1rem,1.7vw,1.2rem)] tracking-[-0.01em]">
           <Highlight play={highlightOn}>{copy.highlight}</Highlight>
         </p>
-        <p data-hero-fade="" className="mb-8.5 max-w-[30em] text-[1.2rem] text-fg-2">
+        <p data-hero-fade="" className="mb-7 max-w-[30em] text-[clamp(1.05rem,1.4vw,1.15rem)] text-fg-2">
           {copy.subtitle}
         </p>
         <div data-hero-fade="" className="flex flex-wrap gap-3">

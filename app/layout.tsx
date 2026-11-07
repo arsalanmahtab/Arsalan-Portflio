@@ -4,6 +4,7 @@ import { Instrument_Serif, Manrope, Syne } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { AmbientBackground } from "@/components/layout/AmbientBackground";
+import { Constellation } from "@/components/layout/Constellation";
 import { Cursor } from "@/components/layout/Cursor";
 import { Footer } from "@/components/layout/Footer";
 import { Grain } from "@/components/layout/Grain";
@@ -58,15 +59,16 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // suppressHydrationWarning: the inline script may add data-loader to <html> before React hydrates.
+    // It's also set on <head>/<body> because browser extensions (e.g. Grammarly) inject attributes there.
     <html
       lang="en"
       className={clsx(syne.variable, manrope.variable, instrumentSerif.variable)}
       suppressHydrationWarning
     >
-      <head>
+      <head suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: loaderGateScript }} />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <a
           href="#main"
           className="fixed top-3 left-3 z-110 translate-y-[-200%] rounded-full bg-lime px-5 py-3 font-bold text-on-lime focus-visible:translate-y-0"
@@ -74,6 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {contactLabels.skipLink}
         </a>
         <AmbientBackground />
+        <Constellation />
         <ScrollProgress />
         <Providers>
           <Loader />

@@ -52,8 +52,9 @@ function HeroScene({ active, layout, scroll, reduced }: Props) {
     // Placement: beside the headline, or fitted into the space below the copy.
     if (group.current) {
       if (layout === "wide") {
-        group.current.position.set(Math.min(3.1, viewport.width / 2 - 2.6), 0, 0);
-        group.current.scale.setScalar(1);
+        // A little smaller and lower than centre, so the whole shell clears the navbar and the fold.
+        group.current.position.set(Math.min(3.1, viewport.width / 2 - 2.4), -0.25, 0);
+        group.current.scale.setScalar(0.86);
       } else {
         group.current.position.set(0, 0, 0);
         group.current.scale.setScalar(Math.min((viewport.height * 0.92) / (SHELL * 2), (viewport.width * 0.98) / (SHELL * 2)));

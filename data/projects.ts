@@ -83,6 +83,27 @@ export const featuredWork: FeaturedProject[] = [
   },
 ];
 
+/** Colour pairs for store previews that have no screenshot. */
+const STORE_GRADIENTS = [
+  ["#5440EE", "#8A7CFF"],
+  ["#1F7A5C", "#47C79A"],
+  ["#B5446E", "#F28AB2"],
+  ["#C2611F", "#F2A04E"],
+  ["#1E4FA8", "#5B8DEF"],
+  ["#5B2C83", "#A06CD5"],
+  ["#2B2D42", "#6C7293"],
+  ["#8C2F39", "#D9595F"],
+  ["#0F6E7A", "#3BB7C4"],
+  ["#14141C", "#3A3A55"],
+] as const;
+
+const hashOf = (text: string) => Array.from(text).reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 7);
+
+/** The same [from, to] colours for a store everywhere it's previewed (the slider cards, the work map). */
+export function storeGradient(name: string) {
+  return STORE_GRADIENTS[hashOf(name) % STORE_GRADIENTS.length];
+}
+
 /** "https://www.brumate.com/" → "brumate.com" */
 export function domainOf(url: string) {
   return url.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "");

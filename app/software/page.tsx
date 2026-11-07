@@ -1,11 +1,14 @@
 /*
  * Software home, in the section order of PROMPT.md section 9. The 3D developer
- * android joins the About section in phase 8.
+ * android joins the About section in phase 8. Each ChapterOpener introduces the
+ * section after it with the work map zoomed in on that area.
  */
 
 import type { Metadata } from "next";
+import { ChapterOpener } from "@/components/sections/shared/ChapterOpener";
 import { Contact } from "@/components/sections/shared/Contact";
 import { ReceptionLobby } from "@/components/sections/shared/ReceptionLobby";
+import { WorkMap } from "@/components/sections/shared/WorkMap";
 import { About } from "@/components/sections/software/About";
 import { AiPipeline } from "@/components/sections/software/AiPipeline";
 import { SaasLaunch } from "@/components/sections/software/SaasLaunch";
@@ -24,11 +27,16 @@ export default function SoftwareHome() {
   return (
     <>
       <SoftwareHero />
+      <WorkMap />
       <ReceptionLobby set="software" />
       <About />
+      <ChapterOpener area="frontend" />
       <Stack />
+      <ChapterOpener area="backend" />
       <WhatIBuild />
+      <ChapterOpener area="ai" />
       <AiPipeline />
+      <ChapterOpener area="saas" />
       <SaasLaunch />
       <SoftwareProjects />
       <Contact mode="software" />
