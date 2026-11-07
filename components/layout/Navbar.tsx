@@ -7,6 +7,7 @@ import { contactLabels } from "@/data/contact";
 import { ModeToggle } from "@/components/layout/ModeToggle";
 import { useModeTransition } from "@/components/providers/ModeTransition";
 import { AnimatedButton } from "@/components/ui/AnimatedButton";
+import { LogoMark } from "@/components/ui/LogoMark";
 import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 /**
@@ -36,12 +37,13 @@ export function Navbar() {
       className="fixed inset-x-0 top-[env(safe-area-inset-top,0px)] z-50 transition-[translate] duration-[450ms] ease-[cubic-bezier(.6,0,.2,1)] data-[hidden=true]:not-focus-within:translate-y-[-110%]"
     >
       <div className="glass mx-auto mt-3 flex h-16 w-[calc(100%-24px)] max-w-[1240px] items-center gap-7 rounded-full pr-2.5 pl-6 max-[760px]:gap-3 max-[620px]:pl-5">
-        {/* Two-line wordmark: the full navbar only fits the 1240px pill with the name stacked. */}
+        {/* Logo mark and two-line wordmark: the full navbar only fits the 1240px pill with the name stacked. */}
         <a
           href="#top"
-          className="mr-auto w-min font-display text-[1.2rem] leading-[0.92] font-extrabold max-[620px]:text-base"
+          className="mr-auto flex items-center gap-2.5 font-display text-[1.2rem] leading-[0.92] font-extrabold max-[620px]:gap-2 max-[620px]:text-base"
         >
-          {site.name}
+          <LogoMark className="max-[620px]:h-8.5" />
+          <span className="w-min">{site.name}</span>
         </a>
         <nav
           aria-label={`${modes[currentMode].toggleLabel} sections`}

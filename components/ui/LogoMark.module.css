@@ -1,0 +1,37 @@
+/* The logo's own colours (components/logo): the "on dark" version by default, "on light" in the light theme. */
+.mark {
+  --logo-bag: #f7f5ff;
+  --logo-face: #110f1e;
+  --logo-detail: #c6f051;
+
+  display: block;
+  flex: none;
+  height: 2.5rem;
+  width: auto;
+}
+
+@media (prefers-color-scheme: light) {
+  .mark {
+    --logo-bag: #110f1e;
+    --logo-face: #c6f051;
+    --logo-detail: #110f1e;
+  }
+}
+
+.handle,
+.smile {
+  stroke: var(--logo-detail);
+}
+
+.antenna,
+.eyes {
+  fill: var(--logo-detail);
+}
+
+.bag {
+  fill: var(--logo-bag);
+}
+
+.face {
+  fill: var(--logo-face);
+}
